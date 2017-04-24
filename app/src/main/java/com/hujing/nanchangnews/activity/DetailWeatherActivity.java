@@ -11,6 +11,7 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -36,6 +37,7 @@ import okhttp3.Response;
 public class DetailWeatherActivity extends AppCompatActivity {
     private static final int SUCCESS=1;
     private static final int FAILED=2;
+    private static final String TAG = "DetailWeatherActivity";
     private TextView tv_city_name;
     private TextView tv_update_time;
     private RecyclerView forecast_rv;
@@ -61,8 +63,15 @@ public class DetailWeatherActivity extends AppCompatActivity {
                     tv_wind_direction.setText(weather.dailyForecastList.get(0).wind.dir);
                     tv_wind_size.setText(weather.dailyForecastList.get(0).wind.sc);
                     travel_suggestion.setText("出行建议:  "+weather.suggestion.travel.txt);
-                    air_suggestion.setText("空气质量:  "+weather.suggestion.air.txt);
+                    String txt = "";
+                    if (weather.suggestion.air!=null){
+                        txt = weather.suggestion.air.txt;
+                    }else {
+                        txt = "暂无";
+                    }
+                    air_suggestion.setText("运动建议:  "+txt);
                     sport_suggestion.setText("运动建议:  "+weather.suggestion.sport.txt);
+
                     forecastList.clear();
                     forecastList.addAll(weather.dailyForecastList);
                     adapter.notifyDataSetChanged();
@@ -93,7 +102,8 @@ public class DetailWeatherActivity extends AppCompatActivity {
         if (TextUtils.isEmpty(SpUtils.getString(this,SpUtils.BEING_PIC))) {
             requestImageResource();
         }else {
-            Glide.with(DetailWeatherActivity.this).load(SpUtils.getString(this,SpUtils.BEING_PIC)).centerCrop().into(iv_background);
+            Glide.with(DetailWeatherActivity.this).load(SpUtils.getString(this,SpUtils.BEING_PIC))
+                    .centerCrop().into(iv_background);
             requestImageResource();
         }
         requestWindowTransparent();
@@ -173,6 +183,7 @@ public class DetailWeatherActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call call, Response response) throws IOException {
                 String json = response.body().string();
+
                 Message message = Message.obtain();
                 if (json.contains("HeWeather5")){
                     weather = JSONUtils.parseWeatherJSONWithGson(json);
