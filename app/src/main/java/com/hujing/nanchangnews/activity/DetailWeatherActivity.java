@@ -11,7 +11,6 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -40,14 +39,13 @@ public class DetailWeatherActivity extends AppCompatActivity {
     private TextView tv_city_name;
     private TextView tv_update_time;
     private RecyclerView forecast_rv;
-    private static final String TAG = "DetailWeatherActivity";
     private TextView tv_wind_direction;
     private TextView tv_wind_size;
     private TextView air_suggestion;
     private TextView sport_suggestion;
     private TextView travel_suggestion;
     private String url;
-    private Handler handler=new Handler(){
+    private  Handler handler=new Handler(){
         @Override
         public void handleMessage(Message msg) {
             switch (msg.what){
