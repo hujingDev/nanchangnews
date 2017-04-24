@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+<group android:checkableBehavior="single">
+    <item android:title="收藏"
+        android:icon="@drawable/collect"
+        android:id="@+id/collection"/>
+    <item android:title="切换城市"
+        android:icon="@drawable/area"
+        android:id="@+id/select_area"/>
+    <item android:title="天气详情"
+        android:icon="@drawable/weather"
+        android:id="@+id/weather_details"/>
+</group>
+</menu>
